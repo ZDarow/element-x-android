@@ -11,6 +11,8 @@ package io.element.android.libraries.preferences.api.store
 import io.element.android.libraries.matrix.api.media.MediaPreviewValue
 import io.element.android.libraries.matrix.api.tracing.LogLevel
 import io.element.android.libraries.matrix.api.tracing.TraceLogPack
+import io.element.android.libraries.preferences.api.store.ProxyConfig
+import io.element.android.libraries.preferences.api.store.BackgroundSyncMode
 import kotlinx.coroutines.flow.Flow
 
 interface AppPreferencesStore {
@@ -62,6 +64,35 @@ interface AppPreferencesStore {
 
     /** Single-snapshot read of all sound prefs; used at boot to seed channels without N reads. */
     suspend fun getNotificationSoundChannelConfig(): NotificationSoundChannelConfig
+
+    // Proxy settings
+
+    /**
+     * Сохраняет конфигурацию прокси.
+     */
+    suspend fun setProxyConfig(config: ProxyConfig)
+
+    /**
+     * Возвращает сохранённую конфигурацию прокси (однократное чтение).
+     */
+    suspend fun getProxyConfig(): ProxyConfig
+
+    /**
+     * Поток с конфигурацией прокси.
+     */
+    fun getProxyConfigFlow(): Flow<ProxyConfig>
+
+    // Background sync settings
+
+    /**
+     * Сохраняет режим фоновой синхронизации.
+     */
+    suspend fun setBackgroundSyncMode(mode: BackgroundSyncMode)
+
+    /**
+     * Возвращает режим фоновой синхронизации.
+     */
+    fun getBackgroundSyncModeFlow(): Flow<BackgroundSyncMode>
 
     suspend fun reset()
 }

@@ -191,9 +191,14 @@ class RustMatrixClientFactory(
                     ClientBuilderSlidingSync.Native -> slidingSyncVersionBuilder(SlidingSyncVersionBuilder.NATIVE)
                 }
             }
-            .run {
+            .let { builder ->
                 // Workaround for non-nullable proxy parameter in the SDK, since each call to the ClientBuilder returns a new reference we need to keep
-                proxyProvider.provides()?.let { proxy(it) } ?: this
+                val proxyUrl = proxyProvider.provides()
+                if (proxyUrl != null) {
+                    builder.proxy(proxyUrl)
+                } else {
+                    builder
+                }
             }
     }
 }

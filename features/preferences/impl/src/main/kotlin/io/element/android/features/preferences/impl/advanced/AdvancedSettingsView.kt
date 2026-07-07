@@ -28,7 +28,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import im.vector.app.features.analytics.plan.Interaction
 import io.element.android.compound.theme.ElementTheme
+import io.element.android.compound.tokens.generated.CompoundIcons
 import io.element.android.features.preferences.impl.R
+import io.element.android.libraries.designsystem.theme.components.IconSource
 import io.element.android.libraries.architecture.coverage.ExcludeFromCoverage
 import io.element.android.libraries.designsystem.components.dialogs.ListDialog
 import io.element.android.libraries.designsystem.components.list.ListItemContent
@@ -65,6 +67,8 @@ fun AdvancedSettingsView(
     state: AdvancedSettingsState,
     onBackClick: () -> Unit,
     onOpenAppSettingsClick: () -> Unit,
+    onOpenProxySettings: () -> Unit = {},
+    onOpenBackgroundSync: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val analyticsService = LocalAnalyticsService.current
@@ -202,6 +206,10 @@ fun AdvancedSettingsView(
             }
         }
 
+        NetworkSection(
+            onOpenProxySettings = onOpenProxySettings,
+            onOpenBackgroundSync = onOpenBackgroundSync,
+        )
         ModerationAndSafety(state)
         if (state.liveLocationMinimumDistanceUpdate != null) {
             LiveLocationUpdatesSection(
@@ -431,6 +439,25 @@ private fun ContentToPreview(state: AdvancedSettingsState) {
         onBackClick = { },
         onOpenAppSettingsClick = {}
     )
+}
+
+@Composable
+private fun NetworkSection(
+    onOpenProxySettings: () -> Unit,
+    onOpenBackgroundSync: () -> Unit,
+) {
+    PreferenceCategory(title = stringResource(R.string.screen_advanced_settings_network)) {
+        ListItem(
+            headlineContent = { Text(stringResource(R.string.screen_advanced_settings_proxy)) },
+            leadingContent = ListItemContent.Icon(IconSource.Vector(CompoundIcons.Cloud())),
+            onClick = onOpenProxySettings,
+        )
+        ListItem(
+            headlineContent = { Text(stringResource(R.string.screen_advanced_settings_background_sync)) },
+            leadingContent = ListItemContent.Icon(IconSource.Vector(CompoundIcons.Restart())),
+            onClick = onOpenBackgroundSync,
+        )
+    }
 }
 
 @Composable

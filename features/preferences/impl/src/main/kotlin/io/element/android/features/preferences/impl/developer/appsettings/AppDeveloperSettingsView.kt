@@ -45,18 +45,17 @@ fun AppDeveloperSettingsView(
     Column(
         modifier = modifier.fillMaxWidth(),
     ) {
-        // Note: this is OK to hardcode strings in this debug screen.
         PreferenceCategory(
-            title = "Feature flags",
+            title = stringResource(R.string.screen_developer_feature_flags),
             showTopDivider = false,
         ) {
             FeatureListContent(state)
         }
         ElementCallCategory(state = state)
-        PreferenceCategory(title = "Rust SDK") {
+        PreferenceCategory(title = stringResource(R.string.screen_developer_rust_sdk)) {
             PreferenceDropdown(
-                title = "Tracing log level",
-                supportingText = "Requires app reboot",
+                title = stringResource(R.string.screen_developer_tracing_log_level),
+                supportingText = stringResource(R.string.screen_developer_requires_reboot),
                 selectedOption = state.tracingLogLevel.dataOrNull(),
                 options = LogLevelItem.entries.toImmutableList(),
                 onSelectOption = { logLevel ->
@@ -64,9 +63,9 @@ fun AppDeveloperSettingsView(
                 }
             )
         }
-        PreferenceCategory(title = "Enable trace logs per SDK feature") {
+        PreferenceCategory(title = stringResource(R.string.screen_developer_enable_trace_logs)) {
             Text(
-                text = "Requires app reboot",
+                text = stringResource(R.string.screen_developer_requires_reboot),
                 style = ElementTheme.typography.fontBodyMdRegular,
                 color = ElementTheme.colors.textSecondary,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
@@ -79,10 +78,10 @@ fun AppDeveloperSettingsView(
                 )
             }
         }
-        PreferenceCategory(title = "Showkase") {
+        PreferenceCategory(title = stringResource(R.string.screen_developer_showkase)) {
             ListItem(
                 headlineContent = {
-                    Text("Open Showkase browser")
+                    Text(stringResource(R.string.screen_developer_open_showkase_browser))
                 },
                 onClick = onOpenShowkase
             )
@@ -90,10 +89,10 @@ fun AppDeveloperSettingsView(
         RageshakePreferencesView(
             state = state.rageshakeState,
         )
-        PreferenceCategory(title = "Crash") {
+        PreferenceCategory(title = stringResource(R.string.screen_developer_crash)) {
             ListItem(
                 headlineContent = {
-                    Text("Crash the app 💥")
+                    Text(stringResource(R.string.screen_developer_crash_the_app))
                 },
                 onClick = { error("This crash is a test.") }
             )
@@ -105,7 +104,7 @@ fun AppDeveloperSettingsView(
 private fun ElementCallCategory(
     state: AppDeveloperSettingsState,
 ) {
-    PreferenceCategory(title = "Element Call") {
+    PreferenceCategory(title = stringResource(R.string.screen_developer_element_call)) {
         val callUrlState = state.customElementCallBaseUrlState
 
         val supportingText = if (callUrlState.baseUrl.isNullOrEmpty()) {
@@ -116,7 +115,7 @@ private fun ElementCallCategory(
         PreferenceTextField(
             headline = stringResource(R.string.screen_advanced_settings_element_call_base_url),
             value = callUrlState.baseUrl,
-            placeholder = "https://.../room",
+            placeholder = stringResource(R.string.screen_developer_element_call_placeholder),
             supportingText = supportingText,
             validation = callUrlState.validator,
             onValidationErrorMessage = stringResource(R.string.screen_advanced_settings_element_call_base_url_validation_error),

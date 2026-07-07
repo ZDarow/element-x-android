@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Developer settings screen -->
+    <string name="screen_developer_theme">Theme</string>
+    <string name="screen_developer_change_brand_color">Change brand color</string>
+    <string name="screen_developer_reset_brand_color">Reset brand color</string>
+    <string name="screen_developer_cache">Cache</string>
+    <string name="screen_developer_database_sizes">Database sizes</string>
+    <string name="screen_developer_database_sizes_computing">Computing…</string>
+    <string name="screen_developer_database_sizes_unknown">Unknown</string>
+    <string name="screen_developer_vacuum_stores">Vacuum stores</string>
+    <string name="screen_developer_clear_cache">Clear cache</string>
+    <string name="screen_developer_feature_flags">Feature flags</string>
+    <string name="screen_developer_rust_sdk">Rust SDK</string>
+    <string name="screen_developer_tracing_log_level">Tracing log level</string>
+    <string name="screen_developer_requires_reboot">Requires app reboot</string>
+    <string name="screen_developer_enable_trace_logs">Enable trace logs per SDK feature</string>
+    <string name="screen_developer_showkase">Showkase</string>
+    <string name="screen_developer_open_showkase_browser">Open Showkase browser</string>
+    <string name="screen_developer_crash">Crash</string>
+    <string name="screen_developer_crash_the_app">Crash the app</string>
+    <string name="screen_developer_element_call">Element Call</string>
+    <string name="screen_developer_element_call_placeholder">https://…/room</string>
+
+    <!-- Proxy settings screen -->
+    <string name="screen_proxy_title">Proxy</string>
+    <string name="screen_proxy_description">Configure an HTTP proxy for Matrix traffic. This will take effect on the next session restart.</string>
+    <string name="screen_proxy_host">Host</string>
+    <string name="screen_proxy_port">Port</string>
+    <string name="screen_proxy_username">Username (optional)</string>
+    <string name="screen_proxy_password">Password (optional)</string>
+    <string name="screen_proxy_save">Save proxy</string>
+    <string name="screen_proxy_reset">Use system proxy</string>
+    <string name="screen_proxy_saving">Saving…</string>
+
+    <!-- Network section in advanced settings -->
+    <string name="screen_advanced_settings_network">Network</string>
+    <string name="screen_advanced_settings_proxy">Proxy</string>
+    <string name="screen_advanced_settings_background_sync">Background sync</string>
+
+    <!-- Background sync settings screen -->
+    <string name="screen_background_sync_title">Background sync</string>
+    <string name="screen_background_sync_description">Control how the app syncs when running in the background</string>
+    <string name="screen_background_sync_disabled">Disabled</string>
+    <string name="screen_background_sync_disabled_description">Stop syncing when the app is in background</string>
+    <string name="screen_background_sync_wifi">WiFi only</string>
+    <string name="screen_background_sync_wifi_description">Keep syncing on WiFi in background</string>
+    <string name="screen_background_sync_always">Always</string>
+    <string name="screen_background_sync_always_description">Keep syncing in background at all times</string>
+</resources>

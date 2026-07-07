@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bot settings screen -->
+    <string name="screen_bot_settings_title">Bot settings</string>
+    <string name="screen_bot_auto_reply_bot">Auto-reply bot</string>
+    <string name="screen_bot_enabled">Enabled</string>
+    <string name="screen_bot_disabled">Disabled</string>
+    <string name="screen_bot_available_commands">Available commands (%d):</string>
+
+    <!-- Bot menu item in preferences -->
+    <string name="bot_preferences_title">Bot</string>
+
+    <!-- Bot command descriptions -->
+    <string name="bot_help_description">List all available commands</string>
+    <string name="bot_ping_description">Check if bot is running</string>
+    <string name="bot_time_description">Current date and time</string>
+    <string name="bot_echo_description">Repeat text back: /echo &lt;text&gt;</string>
+    <string name="bot_status_description">Device status information</string>
+    <string name="bot_calc_description">Evaluate a math expression: /calc 2+2*2</string>
+    <string name="bot_quote_description">Random programming quote</string>
+    <string name="bot_uptime_description">Application uptime</string>
+    <string name="bot_about_description">About this bot</string>
+
+    <!-- Bot command responses -->
+    <string name="bot_help_title">Available commands:</string>
+    <string name="bot_ping_response">Pong! Bot is running.</string>
+    <string name="bot_time_response">Current time: %s</string>
+    <string name="bot_echo_usage">Usage: /echo &lt;text&gt;</string>
+    <string name="bot_status_title">Device status:</string>
+    <string name="bot_status_model">* Model: %s %s</string>
+    <string name="bot_status_android">* Android: %s (API %d)</string>
+    <string name="bot_status_memory">* JVM memory: %dMB / %dMB</string>
+    <string name="bot_status_processors">* Processors: %d</string>
+    <string name="bot_calc_usage">Usage: /calc &lt;expression&gt;</string>
+    <string name="bot_calc_error">Calculation error: %s</string>
+    <string name="bot_uptime_response">Uptime: %dh %dm %ds</string>
+    <string name="bot_about_text">M X Bot v1.0\nBuilt-in auto-reply bot for Element X</string>
+    <string name="bot_unknown_command">Unknown command: /%s. Use /help for the list of commands.</string>
+    <string name="bot_command_not_found">Command not found</string>
+</resources>

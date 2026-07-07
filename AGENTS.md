@@ -119,3 +119,43 @@ We wrap the `matrix-rust-sdk` to isolate the UI from the underlying SDK.
 - Naming: SDK `Room` → `JoinedRoom` or `RoomInfo`.
 - Type Mapping: Map Rust SDK types to Kotlin data classes in the `api` module to avoid leaking `MatrixRustSDK` into the UI.
 - Always follow Kotlin naming conventions (e.g., `userId` instead of `userID`).
+
+---
+
+## Локальные модули
+
+### `features/bot/` — Система ботов и slash-команд
+
+- **api/** — `BotService` (интерфейс), `Command`, `CommandResult`
+- **impl/** — `BotServiceImpl`, `CommandProcessor`, `DefaultCommands` (9 встроенных команд: help, ping, time, echo, status, calc, quote, uptime, about), `MessageObserver` (прослушивает timeline и отвечает на команды)
+- **Навигация:** `BotSettingsNode` в `PreferencesFlowNode.NavTarget.BotSettings`
+- **DI:** Metro (`@ContributesBinding(AppScope::class)` для `BotService`, `@Inject` для `CommandProcessor`, `DefaultCommands`, `MessageObserver`)
+- **Тесты:** `CommandProcessorTest`, `DefaultCommandsTest`, `BotServiceImplTest`, `BotSettingsPresenterTest`
+
+### `features/preferences/impl/proxy/` — Настройки HTTP-прокси
+
+- `ProxySettingsNode` с полным UI (Presenter/View/State/Event)
+- `ProxyProvider` / `DefaultProxyProvider` — получение прокси из настроек пользователя или системы
+- `ProxyConfig` — data class для конфигурации (host, port, auth)
+- Интеграция: `RustMatrixClientFactory` использует `ProxyProvider` при создании `ClientBuilder`
+- **Навигация:** через `NavTarget.ProxySettings` → `AdvancedSettings` → «Сеть» / «Прокси»
+
+### `features/preferences/impl/backgroundsync/` — Фоновая синхронизация
+
+- `BackgroundSyncSettingsNode` с полным UI
+- `BackgroundSyncMode` enum: `Disabled`, `WifiOnly`, `Always`
+- **Навигация:** через `NavTarget.BackgroundSync` → `AdvancedSettings` → «Сеть» / «Фоновая синхронизация»
+
+### Proxy-слой в `libraries/matrix/impl/proxy/`
+
+- `ProxyProvider` — интерфейс получения URL прокси
+- `DefaultProxyProvider` — реализация, читает `AppPreferencesStore` или системные настройки
+- Интегрирован в `RustMatrixClientFactory.getBaseClientBuilder()`: применяет прокси при создании SDK `Client`
+
+---
+
+## Известные ограничения
+
+- BackgroundSyncMode сохраняется в настройках, но ещё не интегрирован с контроллером синхронизации (SyncService). Требуется доработка для реального управления фоновой синхронизацией.
+- Bot-модуль использует hardcoded `botUserId = "@mx_bot:localhost"` — на production необходимо конфигурируемое значение.
+- `MessageObserver` использует polling (delay 1000ms) — при высоких нагрузках может быть заменён на event-driven подход.

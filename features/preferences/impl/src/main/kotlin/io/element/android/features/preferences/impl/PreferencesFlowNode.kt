@@ -33,6 +33,9 @@ import io.element.android.features.preferences.impl.developer.DeveloperSettingsN
 import io.element.android.features.preferences.impl.labs.LabsNode
 import io.element.android.features.preferences.impl.notifications.NotificationSettingsNode
 import io.element.android.features.preferences.impl.notifications.edit.EditDefaultNotificationSettingNode
+import io.element.android.features.bot.impl.settings.BotSettingsNode
+import io.element.android.features.preferences.impl.backgroundsync.BackgroundSyncSettingsNode
+import io.element.android.features.preferences.impl.proxy.ProxySettingsNode
 import io.element.android.features.preferences.impl.root.PreferencesRootNode
 import io.element.android.features.preferences.impl.user.editprofile.EditUserProfileNode
 import io.element.android.libraries.architecture.BackstackView
@@ -115,6 +118,15 @@ class PreferencesFlowNode(
 
         @Parcelize
         data object OssLicenses : NavTarget
+
+        @Parcelize
+        data object BotSettings : NavTarget
+
+        @Parcelize
+        data object ProxySettings : NavTarget
+
+        @Parcelize
+        data object BackgroundSync : NavTarget
     }
 
     private val callback: PreferencesEntryPoint.Callback = callback()
@@ -173,6 +185,18 @@ class PreferencesFlowNode(
 
                     override fun navigateToBlockedUsers() {
                         backstack.push(NavTarget.BlockedUsers)
+                    }
+
+                    override fun navigateToBotSettings() {
+                        backstack.push(NavTarget.BotSettings)
+                    }
+
+                    override fun navigateToProxySettings() {
+                        backstack.push(NavTarget.ProxySettings)
+                    }
+
+                    override fun navigateToBackgroundSyncSettings() {
+                        backstack.push(NavTarget.BackgroundSync)
                     }
 
                     override fun startSignOutFlow() {
@@ -280,7 +304,16 @@ class PreferencesFlowNode(
                 createNode<EditDefaultNotificationSettingNode>(buildContext, plugins = listOf(input, callback))
             }
             NavTarget.AdvancedSettings -> {
-                createNode<AdvancedSettingsNode>(buildContext)
+                val advancedSettingsCallback = object : AdvancedSettingsNode.Callback {
+                    override fun navigateToProxySettings() {
+                        backstack.push(NavTarget.ProxySettings)
+                    }
+
+                    override fun navigateToBackgroundSyncSettings() {
+                        backstack.push(NavTarget.BackgroundSync)
+                    }
+                }
+                createNode<AdvancedSettingsNode>(buildContext, plugins = listOf(advancedSettingsCallback))
             }
             is NavTarget.UserProfile -> {
                 val inputs = EditUserProfileNode.Inputs(navTarget.matrixUser)
@@ -323,6 +356,16 @@ class PreferencesFlowNode(
             }
             NavTarget.AccountDeactivation -> {
                 accountDeactivationEntryPoint.createNode(this, buildContext)
+            }
+
+            NavTarget.BotSettings -> {
+                createNode<BotSettingsNode>(buildContext)
+            }
+            NavTarget.ProxySettings -> {
+                createNode<ProxySettingsNode>(buildContext)
+            }
+            NavTarget.BackgroundSync -> {
+                createNode<BackgroundSyncSettingsNode>(buildContext)
             }
         }
     }

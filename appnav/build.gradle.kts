@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.coil)
 
     implementation(projects.features.announcement.api)
+    implementation(projects.features.bot.impl)
     implementation(projects.features.ftue.api)
     implementation(projects.features.linknewdevice.api)
     implementation(projects.features.share.api)

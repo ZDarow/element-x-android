@@ -15,29 +15,35 @@ import androidx.core.content.getSystemService
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import io.element.android.libraries.di.annotations.ApplicationContext
+import io.element.android.libraries.preferences.api.store.AppPreferencesStore
+import io.element.android.libraries.preferences.api.store.ProxyConfig
 import timber.log.Timber
 
 /**
- * Provides the proxy settings from the system.
- * Note that you can configure the global proxy using adb like this:
- * ```
- * adb shell settings put global http_proxy https://proxy.example.com:8080
- * ```
- * and to remove it:
- * ```
- * adb shell settings delete global http_proxy
- * ```
+ * Предоставляет настройки прокси из пользовательских настроек или системы.
+ *
+ * Приоритет:
+ * 1. Пользовательская конфигурация из AppPreferencesStore (если включена)
+ * 2. Системный прокси из настроек Android (global http_proxy)
  */
 @ContributesBinding(AppScope::class)
 class DefaultProxyProvider(
     @ApplicationContext
-    private val context: Context
+    private val context: Context,
+    private val appPreferencesStore: AppPreferencesStore,
 ) : ProxyProvider {
-    override fun provides(): String? {
+    override suspend fun provides(): String? {
+        // Сначала проверяем пользовательские настройки прокси
+        val userConfig = appPreferencesStore.getProxyConfig()
+        if (userConfig.enabled && userConfig.host.isNotBlank()) {
+            val proxyUrl = userConfig.toProxyUrl()
+            Timber.d("Using custom proxy: $proxyUrl")
+            return proxyUrl
+        }
+
+        // Fallback на системный прокси
         val defaultProxy = context.getSystemService<ConnectivityManager>()?.defaultProxy
         if (defaultProxy == null) {
-            // Note: can be tested by running:
-            // adb shell settings put global http_proxy :0
             Timber.d("No default proxy")
             return null
         }
@@ -47,3 +53,5 @@ class DefaultProxyProvider(
             }
     }
 }
+
+

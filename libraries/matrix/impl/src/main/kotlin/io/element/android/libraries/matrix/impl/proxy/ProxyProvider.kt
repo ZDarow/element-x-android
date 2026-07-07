@@ -9,5 +9,5 @@
 package io.element.android.libraries.matrix.impl.proxy
 
 interface ProxyProvider {
-    fun provides(): String?
+    suspend fun provides(): String?
 }

@@ -49,6 +49,7 @@ import io.element.android.compound.colors.SemanticColorsLightDark
 import io.element.android.features.createroom.api.CreateRoomEntryPoint
 import io.element.android.features.enterprise.api.EnterpriseService
 import io.element.android.features.enterprise.api.SessionEnterpriseService
+import io.element.android.features.bot.impl.MessageObserver
 import io.element.android.features.ftue.api.FtueEntryPoint
 import io.element.android.features.ftue.api.state.FtueService
 import io.element.android.features.ftue.api.state.FtueState
@@ -153,6 +154,7 @@ class LoggedInFlowNode(
     private val analyticsRoomListStateWatcher: AnalyticsRoomListStateWatcher,
     private val createRoomEntryPoint: CreateRoomEntryPoint,
     private val activeLiveLocationShareManager: ActiveLiveLocationShareManager,
+    private val messageObserver: MessageObserver,
 ) : BaseFlowNode<LoggedInFlowNode.NavTarget>(
     backstack = BackStack(
         initialElement = NavTarget.Placeholder,
@@ -217,6 +219,7 @@ class LoggedInFlowNode(
         }
         lifecycle.subscribe(
             onCreate = {
+                messageObserver.start()
                 analyticsRoomListStateWatcher.start()
                 appNavigationStateService.onNavigateToSession(id, matrixClient.sessionId)
                 loggedInFlowProcessor.observeEvents(sessionCoroutineScope)

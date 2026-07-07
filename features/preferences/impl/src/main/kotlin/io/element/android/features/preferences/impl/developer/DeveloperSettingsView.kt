@@ -58,7 +58,6 @@ fun DeveloperSettingsView(
         },
         title = stringResource(id = CommonStrings.common_developer_options)
     ) {
-        // Note: this is OK to hardcode strings in this debug screen.
         AppDeveloperSettingsView(
             state = state.appDeveloperSettingsState,
             onOpenShowkase = onOpenShowkase,
@@ -66,10 +65,10 @@ fun DeveloperSettingsView(
         NotificationCategory(onPushHistoryClick)
 
         if (state.isEnterpriseBuild) {
-            PreferenceCategory(title = "Theme") {
+            PreferenceCategory(title = stringResource(R.string.screen_developer_theme)) {
                 ListItem(
                     headlineContent = {
-                        Text("Change brand color")
+                        Text(stringResource(R.string.screen_developer_change_brand_color))
                     },
                     onClick = {
                         state.eventSink(DeveloperSettingsEvents.SetShowColorPicker(true))
@@ -77,7 +76,7 @@ fun DeveloperSettingsView(
                 )
                 ListItem(
                     headlineContent = {
-                        Text("Reset brand color")
+                        Text(stringResource(R.string.screen_developer_reset_brand_color))
                     },
                     onClick = {
                         state.eventSink(DeveloperSettingsEvents.ChangeBrandColor(null))
@@ -86,12 +85,12 @@ fun DeveloperSettingsView(
             }
         }
         val cache = state.cacheSize
-        PreferenceCategory(title = "Cache") {
+        PreferenceCategory(title = stringResource(R.string.screen_developer_cache)) {
             ListItem(
-                headlineContent = { Text("Database sizes") },
+                headlineContent = { Text(stringResource(R.string.screen_developer_database_sizes)) },
                 supportingContent = {
                     if (state.databaseSizes.isLoading()) {
-                        Text("Computing...")
+                        Text(stringResource(R.string.screen_developer_database_sizes_computing))
                     } else {
                         val dbSizes = state.databaseSizes.dataOrNull()
                         if (dbSizes != null && dbSizes.isNotEmpty()) {
@@ -101,14 +100,14 @@ fun DeveloperSettingsView(
                                 }
                             }
                         } else {
-                            Text("Unknown")
+                            Text(stringResource(R.string.screen_developer_database_sizes_unknown))
                         }
                     }
                 }
             )
             ListItem(
                 headlineContent = {
-                    Text("Vacuum stores")
+                    Text(stringResource(R.string.screen_developer_vacuum_stores))
                 },
                 onClick = {
                     state.eventSink(DeveloperSettingsEvents.VacuumStores)
@@ -116,7 +115,7 @@ fun DeveloperSettingsView(
             )
             ListItem(
                 headlineContent = {
-                    Text("Clear cache")
+                    Text(stringResource(R.string.screen_developer_clear_cache))
                 },
                 trailingContent = if (state.cacheSize.isLoading() || state.clearCacheAction.isLoading()) {
                     ListItemContent.Custom {

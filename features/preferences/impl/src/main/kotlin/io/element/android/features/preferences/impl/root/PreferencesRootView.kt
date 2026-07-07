@@ -54,6 +54,7 @@ fun PreferencesRootView(
     onOpenAnalytics: () -> Unit,
     onOpenRageShake: () -> Unit,
     onOpenLockScreenSettings: () -> Unit,
+    onOpenBotSettings: () -> Unit,
     onOpenAbout: () -> Unit,
     onOpenDeveloperSettings: () -> Unit,
     onOpenAdvancedSettings: () -> Unit,
@@ -103,6 +104,9 @@ fun PreferencesRootView(
             onOpenLockScreenSettings = onOpenLockScreenSettings,
             onSecureBackupClick = onSecureBackupClick,
         )
+
+        // Bot section
+        BotSection(onOpenBotSettings = onOpenBotSettings)
 
         // General section
         GeneralSection(
@@ -224,6 +228,25 @@ private fun ColumnScope.ManageAccountSection(
     if (state.accountManagementUrl != null || state.showLinkNewDevice || state.showBlockedUsersItem) {
         HorizontalDivider()
     }
+}
+
+@Composable
+private fun BotSection(
+    onOpenBotSettings: () -> Unit,
+) {
+    HorizontalDivider(
+        thickness = 8.dp,
+        color = ElementTheme.colors.bgSubtleSecondary,
+    )
+    ListItem(
+        headlineContent = { Text(stringResource(id = io.element.android.features.bot.impl.R.string.bot_preferences_title)) },
+        leadingContent = ListItemContent.Icon(IconSource.Vector(CompoundIcons.ChatProblem())),
+        onClick = onOpenBotSettings,
+    )
+    HorizontalDivider(
+        thickness = 8.dp,
+        color = ElementTheme.colors.bgSubtleSecondary,
+    )
 }
 
 @Composable
@@ -358,6 +381,7 @@ private fun ContentToPreview(state: PreferencesRootState) {
         onLinkNewDeviceClick = {},
         onOpenNotificationSettings = {},
         onOpenLockScreenSettings = {},
+        onOpenBotSettings = {},
         onOpenUserProfile = {},
         onOpenBlockedUsers = {},
         onSignOutClick = {},

@@ -20,10 +20,12 @@ import io.element.android.libraries.matrix.api.media.MediaPreviewValue
 import io.element.android.libraries.matrix.api.tracing.LogLevel
 import io.element.android.libraries.matrix.api.tracing.TraceLogPack
 import io.element.android.libraries.preferences.api.store.AppPreferencesStore
+import io.element.android.libraries.preferences.api.store.BackgroundSyncMode
 import io.element.android.libraries.preferences.api.store.NotificationSound
 import io.element.android.libraries.preferences.api.store.NotificationSound.Companion.toStored
 import io.element.android.libraries.preferences.api.store.NotificationSoundChannelConfig
 import io.element.android.libraries.preferences.api.store.PreferenceDataStoreFactory
+import io.element.android.libraries.preferences.api.store.ProxyConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -42,6 +44,16 @@ private val messageSoundDisplayNameKey = stringPreferencesKey("notificationMessa
 private val callRingtoneUriKey = stringPreferencesKey("notificationCallRingtoneUri")
 private val callRingtoneChannelVersionKey = intPreferencesKey("notificationCallRingtoneChannelVersion")
 private val callRingtoneDisplayNameKey = stringPreferencesKey("notificationCallRingtoneDisplayName")
+
+// Proxy settings keys
+private val proxyEnabledKey = booleanPreferencesKey("proxyEnabled")
+private val proxyHostKey = stringPreferencesKey("proxyHost")
+private val proxyPortKey = intPreferencesKey("proxyPort")
+private val proxyUsernameKey = stringPreferencesKey("proxyUsername")
+private val proxyPasswordKey = stringPreferencesKey("proxyPassword")
+
+// Background sync key
+private val backgroundSyncModeKey = stringPreferencesKey("backgroundSyncMode")
 
 @ContributesBinding(AppScope::class)
 class DefaultAppPreferencesStore(
@@ -235,6 +247,68 @@ class DefaultAppPreferencesStore(
             callRingtoneVersion = prefs[callRingtoneChannelVersionKey] ?: 0,
             callRingtoneDisplayName = prefs[callRingtoneDisplayNameKey],
         )
+    }
+
+    // Proxy settings
+
+    override suspend fun setProxyConfig(config: ProxyConfig) {
+        store.edit { prefs ->
+            prefs[proxyEnabledKey] = config.enabled
+            prefs[proxyHostKey] = config.host
+            prefs[proxyPortKey] = config.port
+            if (!config.username.isNullOrBlank()) {
+                prefs[proxyUsernameKey] = config.username
+            } else {
+                prefs.remove(proxyUsernameKey)
+            }
+            if (!config.password.isNullOrBlank()) {
+                prefs[proxyPasswordKey] = config.password
+            } else {
+                prefs.remove(proxyPasswordKey)
+            }
+        }
+    }
+
+    override suspend fun getProxyConfig(): ProxyConfig {
+        return store.data.first().let { prefs ->
+            ProxyConfig(
+                enabled = prefs[proxyEnabledKey] ?: false,
+                host = prefs[proxyHostKey] ?: "",
+                port = prefs[proxyPortKey] ?: 8080,
+                username = prefs[proxyUsernameKey],
+                password = prefs[proxyPasswordKey],
+            )
+        }
+    }
+
+    override fun getProxyConfigFlow(): Flow<ProxyConfig> {
+        return store.data.map { prefs ->
+            ProxyConfig(
+                enabled = prefs[proxyEnabledKey] ?: false,
+                host = prefs[proxyHostKey] ?: "",
+                port = prefs[proxyPortKey] ?: 8080,
+                username = prefs[proxyUsernameKey],
+                password = prefs[proxyPasswordKey],
+            )
+        }
+    }
+
+    // Background sync settings
+
+    override suspend fun setBackgroundSyncMode(mode: BackgroundSyncMode) {
+        store.edit { prefs ->
+            prefs[backgroundSyncModeKey] = mode.key
+        }
+    }
+
+    override fun getBackgroundSyncModeFlow(): Flow<BackgroundSyncMode> {
+        return store.data.map { prefs ->
+            when (prefs[backgroundSyncModeKey]) {
+                BackgroundSyncMode.WifiOnly.key -> BackgroundSyncMode.WifiOnly
+                BackgroundSyncMode.Always.key -> BackgroundSyncMode.Always
+                else -> BackgroundSyncMode.Disabled
+            }
+        }
     }
 
     override suspend fun reset() {

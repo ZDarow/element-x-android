@@ -18,6 +18,7 @@ import io.element.android.libraries.di.DependencyInjectionGraphOwner
 import io.element.android.libraries.workmanager.api.di.MetroWorkerFactory
 import io.element.android.x.di.AppGraph
 import io.element.android.x.info.logApplicationInfo
+import io.element.android.x.initializer.BotStartupInitializer
 import io.element.android.x.initializer.CacheCleanerInitializer
 import io.element.android.x.initializer.CrashInitializer
 import io.element.android.x.initializer.PlatformInitializer
@@ -36,6 +37,7 @@ class ElementXApplication : Application(), DependencyInjectionGraphOwner, Config
             initializeComponent(CrashInitializer::class.java)
             initializeComponent(PlatformInitializer::class.java)
             initializeComponent(CacheCleanerInitializer::class.java)
+            initializeComponent(BotStartupInitializer::class.java)
         }
 
         logApplicationInfo(this)

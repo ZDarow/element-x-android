@@ -48,6 +48,9 @@ class PreferencesRootNode(
         fun navigateToLinkNewDevice()
         fun navigateToUserProfile(matrixUser: MatrixUser)
         fun navigateToBlockedUsers()
+        fun navigateToBotSettings()
+        fun navigateToProxySettings()
+        fun navigateToBackgroundSyncSettings()
         fun startSignOutFlow()
         fun startAccountDeactivationFlow()
     }
@@ -86,6 +89,7 @@ class PreferencesRootNode(
             onOpenAdvancedSettings = callback::navigateToAdvancedSettings,
             onOpenLabs = callback::navigateToLabs,
             onLinkNewDeviceClick = callback::navigateToLinkNewDevice,
+            onOpenBotSettings = callback::navigateToBotSettings,
             onManageAccountClick = { onManageAccountClick(activity, it, isDark) },
             onOpenNotificationSettings = callback::navigateToNotificationSettings,
             onOpenLockScreenSettings = callback::navigateToLockScreenSettings,

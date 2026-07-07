@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Экран настроек для разработчиков -->
+    <string name="screen_developer_theme">Тема</string>
+    <string name="screen_developer_change_brand_color">Изменить цвет бренда</string>
+    <string name="screen_developer_reset_brand_color">Сбросить цвет бренда</string>
+    <string name="screen_developer_cache">Кэш</string>
+    <string name="screen_developer_database_sizes">Размеры баз данных</string>
+    <string name="screen_developer_database_sizes_computing">Вычисление…</string>
+    <string name="screen_developer_database_sizes_unknown">Неизвестно</string>
+    <string name="screen_developer_vacuum_stores">Очистить хранилища</string>
+    <string name="screen_developer_clear_cache">Очистить кэш</string>
+    <string name="screen_developer_feature_flags">Флаги функций</string>
+    <string name="screen_developer_rust_sdk">Rust SDK</string>
+    <string name="screen_developer_tracing_log_level">Уровень журнала трассировки</string>
+    <string name="screen_developer_requires_reboot">Требуется перезапуск приложения</string>
+    <string name="screen_developer_enable_trace_logs">Включить журналы трассировки по функциям SDK</string>
+    <string name="screen_developer_showkase">Showkase</string>
+    <string name="screen_developer_open_showkase_browser">Открыть браузер Showkase</string>
+    <string name="screen_developer_crash">Аварийное завершение</string>
+    <string name="screen_developer_crash_the_app">Аварийно завершить приложение</string>
+    <string name="screen_developer_element_call">Element Call</string>
+    <string name="screen_developer_element_call_placeholder">https://…/room</string>
+
+    <!-- Сеть в расширенных настройках -->
+    <string name="screen_advanced_settings_network">Сеть</string>
+    <string name="screen_advanced_settings_proxy">Прокси</string>
+    <string name="screen_advanced_settings_background_sync">Фоновая синхронизация</string>
+
+    <!-- Настройки прокси -->
+    <string name="screen_proxy_title">Прокси</string>
+    <string name="screen_proxy_description">Настройка HTTP-прокси для Matrix-трафика. Изменения вступят в силу после перезапуска сессии.</string>
+    <string name="screen_proxy_host">Хост</string>
+    <string name="screen_proxy_port">Порт</string>
+    <string name="screen_proxy_username">Имя пользователя (необязательно)</string>
+    <string name="screen_proxy_password">Пароль (необязательно)</string>
+    <string name="screen_proxy_save">Сохранить прокси</string>
+    <string name="screen_proxy_reset">Использовать системный прокси</string>
+    <string name="screen_proxy_saving">Сохранение…</string>
+
+    <!-- Фоновая синхронизация -->
+    <string name="screen_background_sync_title">Фоновая синхронизация</string>
+    <string name="screen_background_sync_description">Управление синхронизацией при работе в фоне</string>
+    <string name="screen_background_sync_disabled">Отключена</string>
+    <string name="screen_background_sync_disabled_description">Остановить синхронизацию при уходе в фон</string>
+    <string name="screen_background_sync_wifi">Только WiFi</string>
+    <string name="screen_background_sync_wifi_description">Продолжать синхронизацию в фоне только по WiFi</string>
+    <string name="screen_background_sync_always">Всегда</string>
+    <string name="screen_background_sync_always_description">Всегда синхронизироваться в фоне</string>
+</resources>

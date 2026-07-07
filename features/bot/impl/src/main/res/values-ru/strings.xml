@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Экран настроек бота -->
+    <string name="screen_bot_settings_title">Настройки бота</string>
+    <string name="screen_bot_auto_reply_bot">Автоответчик</string>
+    <string name="screen_bot_enabled">Включён</string>
+    <string name="screen_bot_disabled">Выключен</string>
+    <string name="screen_bot_available_commands">Доступные команды (%d):</string>
+
+    <!-- Пункт меню в настройках -->
+    <string name="bot_preferences_title">Бот</string>
+
+    <!-- Описания команд бота -->
+    <string name="bot_help_description">Вывести список всех доступных команд</string>
+    <string name="bot_ping_description">Проверить, работает ли бот</string>
+    <string name="bot_time_description">Текущие дата и время</string>
+    <string name="bot_echo_description">Повторить текст: /echo &lt;текст&gt;</string>
+    <string name="bot_status_description">Информация о состоянии устройства</string>
+    <string name="bot_calc_description">Вычислить математическое выражение: /calc 2+2*2</string>
+    <string name="bot_quote_description">Случайная цитата о программировании</string>
+    <string name="bot_uptime_description">Время работы приложения</string>
+    <string name="bot_about_description">О боте</string>
+
+    <!-- Ответы команд бота -->
+    <string name="bot_help_title">Доступные команды:</string>
+    <string name="bot_ping_response">Понг! Бот работает.</string>
+    <string name="bot_time_response">Текущее время: %s</string>
+    <string name="bot_echo_usage">Использование: /echo &lt;текст&gt;</string>
+    <string name="bot_status_title">Состояние устройства:</string>
+    <string name="bot_status_model">* Модель: %s %s</string>
+    <string name="bot_status_android">* Android: %s (API %d)</string>
+    <string name="bot_status_memory">* Память JVM: %dМБ / %dМБ</string>
+    <string name="bot_status_processors">* Процессоров: %d</string>
+    <string name="bot_calc_usage">Использование: /calc &lt;выражение&gt;</string>
+    <string name="bot_calc_error">Ошибка вычисления: %s</string>
+    <string name="bot_uptime_response">Время работы: %dч %dм %dс</string>
+    <string name="bot_about_text">M X Bot v1.0\nВстроенный бот-автоответчик для Element X</string>
+    <string name="bot_unknown_command">Неизвестная команда: /%s. Используйте /help для просмотра списка команд.</string>
+    <string name="bot_command_not_found">Команда не найдена</string>
+</resources>
